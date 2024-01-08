@@ -16,46 +16,28 @@ class Encoder:
                 'H': 121, 'J': 122, 'K': 123, 'L': 124, 'P': 125, 'O': 126, 'I': 127, 'U': 128, 'Y': 129, 'T': 130,
                 'R': 131, 'E': 132, 'W': 133, 'Q': 134, '(': 135, ')': 136, '=': 137, '_': 138, '#': 139, '/': 140,
                 '&': 141, '"': 142, '+': 143, ':': 144, '%': 145}
-    alphabet2 = {1: 'й', 2: 'ц', 3: 'у', 4: 'к', 5: 'е', 6: 'н', 7: 'г', 8: 'ш', 9: 'щ', 10: 'з', 11: 'х', 12: 'ъ',
-                 13: 'ф', 14: 'ы', 15: 'в', 16: 'а', 17: 'п', 18: 'р', 19: 'о', 20: 'л', 21: 'д', 22: 'ж', 23: 'э',
-                 24: 'я', 25: 'ч', 26: 'с', 27: 'м', 28: 'и', 29: 'т', 30: 'ь', 31: 'б', 32: 'ю', 33: 'ё', 34: '.',
-                 35: ',', 36: '$', 37: '!', 38: '?', 39: '-', 40: 'Ю', 41: 'Б', 42: 'Ь', 43: 'Т', 44: 'И', 45: 'М',
-                 46: 'С', 47: 'Ч', 48: 'Я', 49: 'Ф', 50: 'Ы', 51: 'В', 52: 'А', 53: 'П', 54: 'Р', 55: 'О', 56: 'Л',
-                 57: 'Д', 58: 'Ж', 59: 'Э', 60: 'Ъ', 61: 'Х', 62: 'З', 63: 'Щ', 64: 'Ш', 65: 'Г', 66: 'Н', 67: 'Е',
-                 68: 'К', 69: 'У', 70: 'Ц', 71: 'Й', 72: 'Ё', 73: '1', 74: '3', 75: '5', 76: '7', 77: '9', 78: '0',
-                 79: '8', 80: '6', 81: '4', 82: '2', 83: 'q', 84: 'w', 85: 'e', 86: 'r', 87: 't', 88: 'y', 89: 'u',
-                 90: 'i', 91: 'o', 92: 'p', 93: 'a', 94: 's', 95: 'd', 96: 'f', 97: 'g', 98: 'h', 99: 'j', 100: 'k',
-                 101: 'l', 102: 'z', 103: 'x', 104: 'c', 105: 'v', 106: 'b', 107: 'n', 108: 'm', 109: 'Z', 110: 'X',
-                 111: 'C', 112: 'V', 113: 'B', 114: 'N', 115: 'M', 116: 'A', 117: 'S', 118: 'D', 119: 'F', 120: 'G',
-                 121: 'H', 122: 'J', 123: 'K', 124: 'L', 125: 'P', 126: 'O', 127: 'I', 128: 'U', 129: 'Y', 130: 'T',
-                 131: 'R', 132: 'E', 133: 'W', 134: 'Q', 135: '(', 136: ')', 137: '=', 138: '_', 139: '#', 140: '/',
-                 141: '&', 142: '"', 143: '+', 144: ':', 145: '%'}
-    alphabet3 = {1: 136, 2: 15, 3: 74, 4: 137, 5: 78, 6: 67, 7: 27, 8: 138, 9: 60, 10: 121, 11: 37, 12: 24, 13: 87,
-                 14: 85, 15: 34, 16: 115, 17: 5, 18: 92, 19: 119, 20: 130, 21: 127, 22: 44, 23: 38, 24: 76, 25: 89,
-                 26: 10, 27: 109, 28: 82, 29: 52, 30: 14, 31: 69, 32: 26, 33: 11, 34: 30, 35: 48, 36: 131, 37: 17,
-                 38: 65, 39: 142, 40: 7, 41: 16, 42: 55, 43: 110, 44: 132, 45: 144, 46: 31, 47: 54, 48: 21, 49: 20,
-                 50: 90, 51: 64, 52: 86, 53: 125, 54: 140, 55: 18, 56: 58, 57: 45, 58: 96, 59: 8, 60: 81, 61: 42,
-                 62: 106, 63: 57, 64: 129, 65: 23, 66: 35, 67: 99, 68: 88, 69: 145, 70: 143, 71: 77, 72: 46, 73: 133,
-                 74: 50, 75: 71, 76: 6, 77: 91, 78: 126, 79: 117, 80: 4, 81: 108, 82: 116, 83: 13, 84: 141, 85: 47,
-                 86: 49, 87: 111, 88: 22, 89: 59, 90: 84, 91: 41, 92: 33, 93: 79, 94: 53, 95: 25, 96: 100, 97: 68,
-                 98: 2, 99: 120, 100: 70, 101: 97, 102: 101, 103: 39, 104: 63, 105: 32, 106: 134, 107: 61, 108: 135,
-                 109: 123, 110: 3, 111: 118, 112: 43, 113: 83, 114: 105, 115: 56, 116: 29, 117: 80, 118: 62, 119: 98,
-                 120: 95, 121: 128, 122: 1, 123: 122, 124: 36, 125: 9, 126: 139, 127: 113, 128: 19, 129: 72, 130: 66,
-                 131: 93, 132: 75, 133: 51, 134: 104, 135: 114, 136: 107, 137: 94, 138: 102, 139: 28, 140: 112,
-                 141: 124, 142: 103, 143: 12, 144: 40, 145: 73}
+
+    alphabet_reverse = None
 
     def __init__(self):
         self.first_key = None
         self.second_key = None
         self.message = None
+        self.seed = None
+        self.role = None
 
-    def set_inputs(self, first_key, second_key, message):
+    def set_inputs(self, first_key, second_key, message, role=0):
         self.first_key = first_key
         self.second_key = second_key
         self.message = message
+        self.role = role
+        if self.role:
+            self.message = list(self.message.replace('$', ' '))
         inputs_data_error = self._test_inputs()
         if inputs_data_error:
             return inputs_data_error
+        self._get_seed()
+        self._initialize_alphabets()
 
     def _test_inputs(self):
         if self.first_key == '' or self.second_key == '':
@@ -69,6 +51,7 @@ class Encoder:
                     error_symbols.append(symbol)
             if error_symbols:
                 return 'В ключах недопустимые символы: ' + ' '.join(error_symbols)
+
         error_letters = []
         for letter in self.message:
             if letter not in self.alphabet:
@@ -78,27 +61,76 @@ class Encoder:
 
         return
 
-    def _shuffle_hash_tables(self):
-        pass
-        random.seed(123)
+    def _get_seed(self):
+        if not self.first_key.isnumeric():
+            transformed_first_key = ''
+            for symbol in self.first_key:
+                transformed_first_key += str(self.alphabet[symbol])
+            self.first_key = transformed_first_key
+
+        if not self.second_key.isnumeric():
+            transformed_second_key = ''
+            for symbol in self.second_key:
+                transformed_second_key += str(self.alphabet[symbol])
+            self.second_key = transformed_second_key
+
+        self.seed = ((len(self.first_key) + len(self.second_key)) * len(self.message) +
+                     (int(self.first_key) + int(self.second_key)) * sum(map(int, self.first_key + self.second_key)))
+
+    def _initialize_alphabets(self):
+        random.seed(self.seed)
         keys = list(self.alphabet.keys())
         values = list(self.alphabet.values())
         random.shuffle(keys)
         random.shuffle(values)
         self.alphabet = dict(zip(keys, values))
 
-        keys = list(self.alphabet2.keys())
-        values = list(self.alphabet2.values())
-        random.shuffle(keys)
-        random.shuffle(values)
-        self.alphabet2 = dict(zip(keys, values))
-
-        keys = list(self.alphabet3.keys())
-        values = list(self.alphabet3.values())
-        random.shuffle(keys)
-        random.shuffle(values)
-        self.alphabet3 = dict(zip(keys, values))
+        self.alphabet_reverse = {v: k for k, v in self.alphabet.items()}
 
     def encrypt(self):
-        self._shuffle_hash_tables()
-        pass
+        encrypt_message = []
+        if self.role:
+            self.message = self._shuffle(input_list=self.message)
+        for symbol in self.message:
+            encrypt_message.append(self.alphabet[symbol])
+        for j in range(0, len(encrypt_message)):
+            random.seed(self.seed * j)
+            if self.role:
+                shift = encrypt_message[j] - random.randint(1, len(self.alphabet))
+                if shift < 1:
+                    shift += len(self.alphabet)
+            else:
+                shift = encrypt_message[j] + random.randint(1, len(self.alphabet))
+                if shift > len(self.alphabet):
+                    shift -= len(self.alphabet)
+            encrypt_message[j] = shift
+        for i in range(0, len(encrypt_message)):
+            encrypt_message[i] = self.alphabet_reverse[encrypt_message[i]]
+        if not self.role:
+            encrypt_message = self._shuffle(input_list=encrypt_message)
+            encrypt_message = ''.join(encrypt_message).replace(' ', '$')
+        else:
+             encrypt_message = ''.join(encrypt_message).replace('$', ' ')
+
+        return encrypt_message
+
+    def _shuffle(self, input_list):
+        for shuffle in range(0, len(input_list)):
+            if self.role:
+                shuffle = (len(input_list)-1) - shuffle
+            random.seed(self.seed + shuffle)
+            first_element = random.randint(0, len(input_list) - 1)
+            random.seed(self.seed - shuffle)
+            second_element = random.randint(0, len(input_list) - 1)
+
+            input_list[first_element], input_list[second_element] = (
+                input_list[second_element], input_list[first_element])
+
+        return input_list
+
+
+obj = Encoder()
+obj.set_inputs('First', '125678', 'Oр,зШ+-фO7Ст', 1)
+res = obj.encrypt()
+print(res)
+
