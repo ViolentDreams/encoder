@@ -70,64 +70,48 @@ class Encoder:
         for symbol in self.message:
             symbol = [byte for byte in symbol.encode('utf-8')]
 
-            if len(symbol) == 1:
-                random.seed(self.seed)
+            for index, byte in enumerate(symbol):
+                random.seed(self.seed + index)
 
-                symbol[0] += random.randint(0, 127)
-                if symbol[0] > 127:
-                    symbol [0] -= 127
+                if index == 0:
 
-            elif len(symbol) == 2:
-                random.seed(self.seed)
+                    if len(symbol) == 1:
 
-                symbol[0] += random.randint(0, 31) # 223 - 192
-                if symbol[0] > 223:
-                    symbol[0] = (symbol[0] - 223) + 192
-                elif symbol[0] < 192:
-                    symbol[0] = 223 - (192 - symbol[0])
+                        symbol[index] += random.randint(0, 127)
+                        if symbol[index] > 127:
+                            symbol[index] -= 127
 
-                random.seed(self.seed)
-                symbol[1] += random.randint(0, 63) # 191 - 128
-                if symbol[1] > 191:
-                    symbol[1] = (symbol[1] - 191) + 128
-                elif symbol[1] < 128:
-                    symbol[1] = 191 - (128 - symbol[1])
+                    elif len(symbol) == 2:
 
-            elif len(symbol) == 3:
-                for index, byte in enumerate(symbol):
-                    random.seed(self.seed)
+                        symbol[index] += random.randint(0, 31)  # 223 - 192
+                        if symbol[index] > 223:
+                            symbol[index] = (symbol[0] - 223) + 192
+                        elif symbol[index] < 192:
+                            symbol[index] = 223 - (192 - symbol[index])
 
-                    if index == 0:
-                        symbol[index] += random.randint(0, 15) # 239 - 224
+                    elif len(symbol) == 3:
+
+                        symbol[index] += random.randint(0, 15)  # 239 - 224
                         if symbol[index] > 239:
                             symbol[index] = (symbol[index] - 239) + 224
                         elif symbol[index] < 224:
                             symbol[index] = 239 - (224 - symbol[index])
 
-                    else:
-                        symbol[index] += random.randint(0, 63) # 192 - 128
-                        if symbol[index] > 191:
-                            symbol[index] = (symbol[0] - 191) + 128
-                        elif symbol[index] < 128:
-                            symbol[index] = 191 - (128 - symbol[index])
+                    elif len(symbol) == 4:
 
-            elif len(symbol) == 4:
-                for index, byte in enumerate(symbol):
-                    random.seed(self.seed)
-
-                    if index == 0:
-                        symbol[index] += random.randint(0, 7) # 247 - 240
+                        symbol[index] += random.randint(0, 7)  # 247 - 240
                         if symbol[index] > 247:
                             symbol[index] = (symbol[index] - 247) + 240
                         elif symbol[index] < 240:
                             symbol[index] = 247 - (240 - symbol[index])
 
-                    else:
-                        symbol[index] += random.randint(0, 63) # 191 - 128
-                        if symbol[index] > 191:
-                            symbol[index] = (symbol[0] - 191) + 128
-                        elif symbol[index] < 128:
-                            symbol[index] = 191 - (128 - symbol[index])
+                else:
+
+                    symbol[index] += random.randint(0, 63)  # 191 - 128
+                    if symbol[index] > 191:
+                        symbol[index] = (symbol[0] - 191) + 128
+                    elif symbol[index] < 128:
+                        symbol[index] = 191 - (128 - symbol[index])
 
             encrypt_message.append(bytes(symbol).decode('utf-8'))
 
@@ -155,4 +139,3 @@ obj = Encoder()
 obj.set_inputs(first_key='first', second_key='second', message='my message', role=0)
 res = obj.encrypt()
 print(res)
-
