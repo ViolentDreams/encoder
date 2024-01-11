@@ -13,7 +13,7 @@ class Encoder:
     def set_inputs(self, first_key, second_key, message, role=0):
         self.first_key = first_key
         self.second_key = second_key
-        self.message = message
+        self.message = list(message)
         self.role = role
         inputs_data_error = self._test_inputs()
         if inputs_data_error:
@@ -67,51 +67,84 @@ class Encoder:
         if self.role:
             self.message = self._shuffle(input_list=self.message)
 
-        for symbol in self.message:
+        for index_symbol, symbol in enumerate(self.message):
             symbol = [byte for byte in symbol.encode('utf-8')]
 
-            for index, byte in enumerate(symbol):
-                random.seed(self.seed + index)
+            for index_byte, byte in enumerate(symbol):
+                random.seed(self.seed + index_symbol + index_byte)
 
-                if index == 0:
+                if index_byte == 0:
 
                     if len(symbol) == 1:
 
-                        symbol[index] += random.randint(0, 127)
-                        if symbol[index] > 127:
-                            symbol[index] -= 127
+                        if not self.role:
+                            symbol[index_byte] += random.randint(0, 127)
+                            if symbol[index_byte] > 127:
+                                symbol[index_byte] -= 127
+                        else:
+                            symbol[index_byte] -= random.randint(0, 127)
+                            if symbol[index_byte] < 0:
+                                symbol[index_byte] += 127
 
                     elif len(symbol) == 2:
 
-                        symbol[index] += random.randint(0, 31)  # 223 - 192
-                        if symbol[index] > 223:
-                            symbol[index] = (symbol[0] - 223) + 192
-                        elif symbol[index] < 192:
-                            symbol[index] = 223 - (192 - symbol[index])
+                        if not self.role:
+                            symbol[index_byte] += random.randint(0, 31)  # 223 - 192
+                            if symbol[index_byte] > 223:
+                                symbol[index_byte] = (symbol[index_byte] - 223) + 192
+                            elif symbol[index_byte] < 192:
+                                symbol[index_byte] = 223 - (192 - symbol[index_byte])
+                        else:
+                            symbol[index_byte] -= random.randint(0, 31)  # 223 - 192
+                            if symbol[index_byte] > 223:
+                                symbol[index_byte] = (symbol[index_byte] - 223) - 223
+                            elif symbol[index_byte] < 192:
+                                symbol[index_byte] = 223 - (192 - symbol[index_byte])
 
                     elif len(symbol) == 3:
 
-                        symbol[index] += random.randint(0, 15)  # 239 - 224
-                        if symbol[index] > 239:
-                            symbol[index] = (symbol[index] - 239) + 224
-                        elif symbol[index] < 224:
-                            symbol[index] = 239 - (224 - symbol[index])
+                        if not self.role:
+                            symbol[index_byte] += random.randint(0, 15)  # 239 - 224
+                            if symbol[index_byte] > 239:
+                                symbol[index_byte] = (symbol[index_byte] - 239) + 224
+                            elif symbol[index_byte] < 224:
+                                symbol[index_byte] = 239 - (224 - symbol[index_byte])
+                        else:
+                            symbol[index_byte] -= random.randint(0, 15)  # 239 - 224
+                            if symbol[index_byte] > 239:
+                                symbol[index_byte] = (symbol[index_byte] - 239) - 239
+                            elif symbol[index_byte] < 224:
+                                symbol[index_byte] = 239 - (224 - symbol[index_byte])
 
                     elif len(symbol) == 4:
 
-                        symbol[index] += random.randint(0, 7)  # 247 - 240
-                        if symbol[index] > 247:
-                            symbol[index] = (symbol[index] - 247) + 240
-                        elif symbol[index] < 240:
-                            symbol[index] = 247 - (240 - symbol[index])
+                        if not self.role:
+                            symbol[index_byte] += random.randint(0, 7)  # 247 - 240
+                            if symbol[index_byte] > 247:
+                                symbol[index_byte] = (symbol[index_byte] - 247) + 240
+                            elif symbol[index_byte] < 240:
+                                symbol[index_byte] = 247 - (240 - symbol[index_byte])
+                        else:
+                            symbol[index_byte] -= random.randint(0, 7)  # 247 - 240
+                            if symbol[index_byte] > 247:
+                                symbol[index_byte] = (symbol[index_byte] - 247) - 247
+                            elif symbol[index_byte] < 240:
+                                symbol[index_byte] = 247 - (240 - symbol[index_byte])
 
                 else:
 
-                    symbol[index] += random.randint(0, 63)  # 191 - 128
-                    if symbol[index] > 191:
-                        symbol[index] = (symbol[0] - 191) + 128
-                    elif symbol[index] < 128:
-                        symbol[index] = 191 - (128 - symbol[index])
+                    if not self.role:
+                        symbol[index_byte] += random.randint(0, 63)  # 191 - 128
+                        if symbol[index_byte] > 191:
+                            symbol[index_byte] = (symbol[index_byte] - 191) + 128
+                        elif symbol[index_byte] < 128:
+                            symbol[index_byte] = 191 - (128 - symbol[index_byte])
+                    else:
+                        symbol[index_byte] -= random.randint(0, 63)  # 191 - 128
+                        if symbol[index_byte] > 191:
+                            symbol[index_byte] = (symbol[index_byte] - 191) - 191
+                        elif symbol[index_byte] < 128:
+                            symbol[index_byte] = 191 - (128 - symbol[index_byte])
 
             encrypt_message.append(bytes(symbol).decode('utf-8'))
 
@@ -136,6 +169,6 @@ class Encoder:
 
 
 obj = Encoder()
-obj.set_inputs(first_key='first', second_key='second', message='my message', role=0)
+obj.set_inputs(first_key='first', second_key='second', message='կɴƘý؁ÉѵӮչ֞̚Ļϖچ̖Ɍ̗!ЄI>ٷکĢ', role=1)
 res = obj.encrypt()
 print(res)
