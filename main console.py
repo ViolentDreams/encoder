@@ -49,13 +49,13 @@ class Encoder:
     def _get_seed(self):
         if not self.first_key.isnumeric():
             transformed_first_key = ''
-            for i in [byte for byte in self.first_key.encode('utf-8')]:
+            for i in self.first_key.encode('utf-8'):
                 transformed_first_key += str(i)
             self.first_key = transformed_first_key
 
         if not self.second_key.isnumeric():
             transformed_second_key = ''
-            for i in [byte for byte in self.second_key.encode('utf-8')]:
+            for i in self.second_key.encode('utf-8'):
                 transformed_second_key += str(i)
             self.second_key = transformed_second_key
 
@@ -156,7 +156,7 @@ class Encoder:
     def _shuffle(self, input_list):
         for shuffle in range(0, len(input_list)):
             if self.role:
-                shuffle = (len(input_list)-1) - shuffle
+                shuffle = (len(input_list) - 1) - shuffle
             random.seed(self.seed + shuffle)
             first_element = random.randint(0, len(input_list) - 1)
             random.seed(self.seed - shuffle)
@@ -169,6 +169,7 @@ class Encoder:
 
 
 obj = Encoder()
-obj.set_inputs(first_key='first', second_key='second', message='Ѳ9ŕ̋۰Ӄ}ܯȸ٢2׈5۹ƁѕȤȬ3شPOSՎԉƖŁʝթՇԟg)̛ުշ¸ͨώ|uۣʕňڙֱҐ̥ΩǖԙǿԴľٚ)ț{ۡʂpʀܽφęX˻ĨьϓާЭ', role=1)
+obj.set_inputs(first_key='first', second_key='second', message='ащихитэо щи хи тэо', role=0)
+# FIXME починить выдачу знака новой строки \n и пробела
 res = obj.encrypt()
 print(res)
